@@ -1,0 +1,44 @@
+%ul.cards
+
+#cardTemplate.template
+  %li.card
+    %h2.name ${name}
+    .attack ${attack}
+
+:javascript
+  var key = "0ArtCBkZR37MmdHFXS1pPRmVlSjIzeHRKalpaQnlHNFE";
+  // var url = "http://spreadsheets.google.com/feeds/list/o13394135408524254648.240766968415752635/od6/public/values?alt=json-in-script&callback=?";
+  var url = "http://spreadsheets.google.com/feeds/list/" + key + "/od6/public/values?alt=json-in-script&callback=?";
+
+  $(function() {
+    $.getJSON( url, function(data) {
+      var results = [];
+
+      console.log(data);
+
+      $.each(data.feed.entry, function(i, entry) {
+        var result = {};
+
+        $.each(entry, function(key) {
+          if(key.indexOf("gsx$") == 0) {
+            var realKey = key.substring(4);
+            var value = entry[key].$t;
+
+            console.log(realKey + ": " + value);
+
+            result[realKey] = value;
+          }
+        });
+
+        results.push(result);
+      });
+
+      console.log(results);
+
+      $.each(results, function(i, card) {
+        for(var i = 0; i < 4; i++) {
+          $("#cardTemplate").tmpl(card).appendTo("ul.cards");
+        }
+      });
+    });
+  });

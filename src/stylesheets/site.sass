@@ -1,0 +1,31 @@
+@import base
+@import constants
+
+body
+  margin: 0
+
+ul.cards
+  font-size: 0px
+
+li.card
+  +box-sizing(border-box)
+  +inline-block
+
+  border: 1px solid black
+  font-size: 12px
+  position: relative
+  height: 198px * !print_scale
+  width: 153px * !print_scale
+
+  h2
+    font-size: 14px
+    font-weight: bold
+
+  .attack
+    font-weight: bold
+    position: absolute
+    top: 0.25em
+    right: 1em
+
+.template
+  display: none

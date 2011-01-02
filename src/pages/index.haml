@@ -4,6 +4,7 @@
   %li.card
     %h2.name ${name}
     .attack ${attack}
+    .work ${work}
     .defense ${defense}
     .types
       .type{ :class => "${type3}" } ${type3}
@@ -20,7 +21,7 @@
           4.times ->
             $("#cardTemplate").tmpl(card).appendTo("ul.cards")
 
-        $(".attack, .defense").each () ->
+        $(".attack, .defense, .work").each () ->
           $this = $(this)
 
           n = parseInt($this.text(), 10)

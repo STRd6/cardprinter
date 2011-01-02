@@ -4,45 +4,29 @@
   %li.card
     %h2.name ${name}
     .attack ${attack}
+    .defense ${defense}
     .types
       .type{ :class => "${type3}" } ${type3}
       .type{ :class => "${type2}" } ${type2}
       .type{ :class => "${type1}" } ${type1}
 
-:javascript
-  var key = "0ArtCBkZR37MmdHFXS1pPRmVlSjIzeHRKalpaQnlHNFE";
-  // var url = "http://spreadsheets.google.com/feeds/list/o13394135408524254648.240766968415752635/od6/public/values?alt=json-in-script&callback=?";
-  var url = "http://spreadsheets.google.com/feeds/list/" + key + "/od6/public/values?alt=json-in-script&callback=?";
+:plain
+  <script type="text/coffeescript">
+    $ () ->
+      key = "0ArtCBkZR37MmdHFXS1pPRmVlSjIzeHRKalpaQnlHNFE"
 
-  $(function() {
-    $.getJSON( url, function(data) {
-      var results = [];
+      $.loadSpreadsheet key, (results) ->
+        $.each results, (i, card) ->
+          4.times ->
+            $("#cardTemplate").tmpl(card).appendTo("ul.cards")
 
-      console.log(data);
+        $(".attack, .defense").each () ->
+          $this = $(this)
 
-      $.each(data.feed.entry, function(i, entry) {
-        var result = {};
+          n = parseInt($this.text(), 10)
+          $this.text('')
 
-        $.each(entry, function(key) {
-          if(key.indexOf("gsx$") == 0) {
-            var realKey = key.substring(4);
-            var value = entry[key].$t;
+          n.times () ->
+            $this.append("<div class='symbol'></>")
 
-            console.log(realKey + ": " + value);
-
-            result[realKey] = value;
-          }
-        });
-
-        results.push(result);
-      });
-
-      console.log(results);
-
-      $.each(results, function(i, card) {
-        for(var i = 0; i < 4; i++) {
-          $("#cardTemplate").tmpl(card).appendTo("ul.cards");
-        }
-      });
-    });
-  });
+  </script>

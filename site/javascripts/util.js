@@ -18,5 +18,3 @@ Number.prototype.times = function(iterator, context) {
   return i;
 };
 
-var ohai = "there";
-

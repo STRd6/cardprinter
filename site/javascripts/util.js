@@ -17,3 +17,8 @@ Number.prototype.times = function(iterator, context) {
 
   return i;
 };
+
+Number.prototype.abs = function() {
+  return Math.abs(this);
+};
+
